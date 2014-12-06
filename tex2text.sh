@@ -2,7 +2,7 @@
 
 ofile=${1%.*}.txt
 
-echo "reformatting $1 into plaintext file $ofile..."
+echo "interpreting $1 into plaintext file $ofile..."
 
 # UNIX format
 dos2unix -q $1
