@@ -3,7 +3,7 @@
 #           tex2text: Interpreting Tex into Plaintext
 #
 #   author:     Xiaokui Shu
-#   version:    1.0
+#   version:    1.0.1
 #   license:    Apache 2.0
 #   email:      subx@cs.vt.edu
 ################################################################
@@ -31,7 +31,7 @@ perl -p -i -e 's/~/ /g' $ofile
 
 # remove all comments
 sed -i '/^\s*%/d' $ofile
-perl -p -i -e 's/([^\\])%(.*)$/$1/g' $ofile
+perl -p -i -e 's/([^\\])%(.*)$/\1/g' $ofile
 
 removespace
 
@@ -43,6 +43,9 @@ perl -00pl -i -e 's/\s*\n\s*/ /g' $ofile
 # remove escape before "%"
 perl -p -i -e 's/\\%/%/g' $ofile
 
+# handle quotes
+perl -p -i -e "s/\`\`([^']+)''/\"\1\"/g" $ofile
+
 # remove all citations
 perl -p -i -e 's/(in|e.g.,)? \\(cite){[^}]+}//g' $ofile
 
@@ -53,7 +56,7 @@ perl -p -i -e 's/\\(ref){[^}]+}/9/g' $ofile
 perl -p -i -e 's/\\verb(.)([^\\1]+)\1/X/g' $ofile
 
 # open titles and remove labels
-perl -p -i -e 's/\\(section|subsection|subsubsection){([^}]+)}/$2/g' $ofile
+perl -p -i -e 's/\\(section|subsection|subsubsection){([^}]+)}/\2/g' $ofile
 perl -p -i -e 's/\\label{[^}]+}//g' $ofile
 
 # remove "\noindent"
@@ -66,9 +69,9 @@ perl -p -i -e 's/\\(tiny|scriptsize|footnotesize|small)/ /g' $ofile
 perl -p -i -e 's/\\[vh]space{[^}]+}/ /g' $ofile
 
 # unformat it, bf, sc, tt
-perl -p -i -e 's/\\text(it|bf|sc|tt){([^}]+)}/$2/g' $ofile
-perl -p -i -e 's/\\emph{([^}]+)}/$1/g' $ofile
-perl -p -i -e 's/{\\(em|emph|bf|sc|tt) ([^}]+)}/$2/g' $ofile
+perl -p -i -e 's/\\text(it|bf|sc|tt){([^}]+)}/\2/g' $ofile
+perl -p -i -e 's/\\emph{([^}]+)}/\1/g' $ofile
+perl -p -i -e 's/{\\(em|emph|bf|sc|tt) ([^}]+)}/\2/g' $ofile
 
 # remove enumerate env
 perl -p -i -e 's/\\begin{(enumerate|itemize|description)}(\[[^\]]+\])?//g' $ofile
@@ -87,14 +90,15 @@ perl -p -i -e 's/\\end{equation}/\$/g' $ofile
 # replace math symbols
 perl -p -i -e 's/\$n\$/n/g' $ofile
 perl -p -i -e 's/\$[^\$]+\$/X/g' $ofile
+perl -p -i -e 's/X$//g' $ofile
 
 
 #### Sec 3: steps that require inner {} to be cleaned first ####
 # put footnote at the end of a line.
-perl -p -i -e 's/^(.*)\\footnote{([^}]+)}(.*)$/$1$3 $2/g' $ofile
+perl -p -i -e 's/^(.*)\\footnote{([^}]+)}(.*)$/\1\3 \2/g' $ofile
 
 # extract captions from figures and tables
-perl -p -i -e 's/^\\begin{([^}]+)}(.*)\\caption{([^}]+)}(.*)\\end{\1}/$3/g' $ofile
+perl -p -i -e 's/^\\begin{([^}]+)}(.*)\\caption{([^}]+)}(.*)\\end{\1}/\3/g' $ofile
 
 # remove empty begin-end/parentheses pairs
 perl -p -i -e 's/\\begin{([^}]+)}( +)\\end{\1}/ /g' $ofile
