@@ -21,7 +21,7 @@ perl -p -i -e 's/~/ /g' $ofile
 
 # remove all comments
 sed -i '/^\s*%/d' $ofile
-perl -p -i -e 's/[^\\]%(.*)$//g' $ofile
+perl -p -i -e 's/([^\\])%(.*)$/$1/g' $ofile
 
 
 #### Sec 1 ####
