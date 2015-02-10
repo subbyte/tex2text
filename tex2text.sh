@@ -55,6 +55,10 @@ perl -p -i -e 's/\\(ref){[^}]+}/9/g' $ofile
 # replace \verb with "X"
 perl -p -i -e 's/\\verb(.)([^\\1]+)\1/X/g' $ofile
 
+# open abstract
+perl -p -i -e 's/\\begin{(abstract)}//g' $ofile
+perl -p -i -e 's/\\end{(abstract)}//g' $ofile
+
 # open titles and remove labels
 perl -p -i -e 's/\\(section|subsection|subsubsection){([^}]+)}/\2/g' $ofile
 perl -p -i -e 's/\\label{[^}]+}//g' $ofile
