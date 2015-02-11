@@ -47,7 +47,7 @@ perl -p -i -e 's/\\%/%/g' $ofile
 perl -p -i -e "s/\`\`([^']+)''/\"\1\"/g" $ofile
 
 # remove all citations
-perl -p -i -e 's/(in|e.g.,)? \\(cite){[^}]+}//g' $ofile
+perl -p -i -e 's/(in|,e.g.,)? \\(cite){[^}]+}//g' $ofile
 
 # replace reference with "9"
 perl -p -i -e 's/\\(ref){[^}]+}/9/g' $ofile
@@ -72,20 +72,19 @@ perl -p -i -e 's/\\(tiny|scriptsize|footnotesize|small)/ /g' $ofile
 # remove "\vspace", "\hspace"
 perl -p -i -e 's/\\[vh]space{[^}]+}/ /g' $ofile
 
-# unformat it, bf, sc, tt
-perl -p -i -e 's/\\text(it|bf|sc|tt){([^}]+)}/\2/g' $ofile
-perl -p -i -e 's/\\emph{([^}]+)}/\1/g' $ofile
-perl -p -i -e 's/{\\(em|emph|bf|sc|tt) ([^}]+)}/\2/g' $ofile
-
 # remove enumerate env
-perl -p -i -e 's/\\begin{(enumerate|itemize|description)}(\[[^\]]+\])?//g' $ofile
-perl -p -i -e 's/\\end{(enumerate|itemize|description)}//g' $ofile
+perl -p -i -e 's/\\begin{(enumerate|itemize|description|inparaenum)}(\[[^\]]+\])?//g' $ofile
+perl -p -i -e 's/\\end{(enumerate|itemize|description|inparaenum)}//g' $ofile
 perl -p -i -e 's/\\item //g' $ofile
 perl -p -i -e 's/ (i|ii|iii|iv|v|vi|vii|viii|iv|x)\) / /g' $ofile
 
-# open definition, theorem, lamma, example
-perl -p -i -e 's/\\begin{(definition|theorem|lemma|example)}//g' $ofile
-perl -p -i -e 's/\\end{(definition|theorem|lemma|example)}//g' $ofile
+# open ifFull
+perl -p -i -e 's/\\ifFull//g' $ofile
+perl -p -i -e 's/\\fi//g' $ofile
+
+# open definition, theorem, lamma, example, proof
+perl -p -i -e 's/\\begin{(definition|theorem|lemma|example|proof)}//g' $ofile
+perl -p -i -e 's/\\end{(definition|theorem|lemma|example|proof)}//g' $ofile
 
 # put equation into $...$ for further deleting
 perl -p -i -e 's/\\begin{equation}/\$/g' $ofile
@@ -95,6 +94,11 @@ perl -p -i -e 's/\\end{equation}/\$/g' $ofile
 perl -p -i -e 's/\$n\$/n/g' $ofile
 perl -p -i -e 's/\$[^\$]+\$/X/g' $ofile
 perl -p -i -e 's/X$//g' $ofile
+
+# unformat it, bf, sc, tt
+perl -p -i -e 's/\\text(it|bf|sc|tt){([^}]+)}/\2/g' $ofile
+perl -p -i -e 's/\\emph{([^}]+)}/\1/g' $ofile
+perl -p -i -e 's/{\\(em|emph|bf|sc|tt) ([^}]+)}/\2/g' $ofile
 
 
 #### Sec 3: steps that require inner {} to be cleaned first ####
