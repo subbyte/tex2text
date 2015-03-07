@@ -47,7 +47,8 @@ perl -p -i -e 's/\\%/%/g' $ofile
 perl -p -i -e "s/\`\`([^']+)''/\"\1\"/g" $ofile
 
 # remove all citations
-perl -p -i -e 's/(in|,e.g.,)? \\(cite){[^}]+}//g' $ofile
+perl -p -i -e 's/(, e\.g\.,|in)?( |~)?\\cite{[^}]+}//g' $ofile
+perl -p -i -e 's/\(e\.g\.,\)//g' $ofile
 
 # replace reference with "9"
 perl -p -i -e 's/\\(ref){[^}]+}/9/g' $ofile
