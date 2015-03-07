@@ -100,6 +100,9 @@ perl -p -i -e 's/\\text(it|bf|sc|tt){([^}]+)}/\2/g' $ofile
 perl -p -i -e 's/\\emph{([^}]+)}/\1/g' $ofile
 perl -p -i -e 's/{\\(em|emph|bf|sc|tt) ([^}]+)}/\2/g' $ofile
 
+# dots
+perl -p -i -e 's/\\dots/\.\.\./g' $ofile
+
 
 #### Sec 3: steps that require inner {} to be cleaned first ####
 # put footnote at the end of a line.
