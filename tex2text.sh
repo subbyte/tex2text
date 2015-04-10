@@ -73,8 +73,8 @@ perl -p -i -e 's/\\(tiny|scriptsize|footnotesize|small)/ /g' $ofile
 perl -p -i -e 's/\\[vh]space{[^}]+}/ /g' $ofile
 
 # remove enumerate env
-perl -p -i -e 's/\\begin{(enumerate|itemize|description|inparaenum)}(\[[^\]]+\])?//g' $ofile
-perl -p -i -e 's/\\end{(enumerate|itemize|description|inparaenum)}//g' $ofile
+perl -p -i -e 's/\\begin{(enumerate|itemize|description|inparaenum|svgraybox)}(\[[^\]]+\])?//g' $ofile
+perl -p -i -e 's/\\end{(enumerate|itemize|description|inparaenum|svgraybox)}//g' $ofile
 perl -p -i -e 's/\\item //g' $ofile
 perl -p -i -e 's/ (i|ii|iii|iv|v|vi|vii|viii|iv|x)\) / /g' $ofile
 
@@ -94,6 +94,9 @@ perl -p -i -e 's/\\end{equation}/\$/g' $ofile
 perl -p -i -e 's/\$n\$/n/g' $ofile
 perl -p -i -e 's/\$[^\$]+\$/X/g' $ofile
 perl -p -i -e 's/X$//g' $ofile
+
+# handle escaped $
+perl -p -i -e 's/\\\$/\$/g' $ofile
 
 # unformat it, bf, sc, tt
 perl -p -i -e 's/\\text(it|bf|sc|tt){([^}]+)}/\2/g' $ofile
