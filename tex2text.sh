@@ -42,7 +42,7 @@ sed -i '/\\ifFull/,/\\fi/d' $ofile
 removespace
 
 # join lines in each paragraph and get rid of multiple empty lines
-perl -i -00ple '' $ofile
+perl -i -00ple 's/\s*\n\s*/ /g' $ofile
 
 
 #### Sec 2 ####
