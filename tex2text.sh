@@ -20,6 +20,7 @@ removespace () {
     perl -i -ple 's/\s+/ /g' $ofile
     perl -i -pe 's/^ //g' $ofile
     perl -i -pe 's/ $//g' $ofile
+    perl -i -pe 's/,,//g' $ofile
 }
 
 
@@ -53,7 +54,7 @@ perl -i -pe 's/\\%/%/g' $ofile
 perl -i -pe "s/\`\`([^']+)''/\"\1\"/g" $ofile
 
 # remove all citations
-perl -i -pe 's/(e\.g\.,|, e\.g\.,|in)?( |~)?\\cite\{[^\}]+\}//g' $ofile
+perl -i -pe 's/( e\.g\.,| in)?( |~)?\\cite\{[^\}]+\}//g' $ofile
 
 # replace reference with "9"
 perl -i -pe 's/\\ref\{[^\}]+\}/9/g' $ofile
